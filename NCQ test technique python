@@ -48,3 +48,4 @@ def solution(A):
     if dp[i] >= 0:
       aux = min(aux,S-2*i)
   return aux
+
