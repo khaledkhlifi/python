@@ -1,1 +1,50 @@
 
+#algo 1
+def solution(N, A):
+    Ar, kMax, Max = [0] * N, 0, 0
+    for elm in A:
+        if(elm > N): kMax = Max
+        else:
+            if(Ar[elm-1] < kMax ): Ar[elm-1] = kMax + 1
+            else: Ar[elm-1] += 1
+            Max = max(Max, Ar[elm-1])
+    for i in range(N):
+        if(Ar[i-1] < kMax): Ar[i-1] = kMax
+return Ar
+#algo 2 (fibionacci)
+def solution(A, B):
+    L = max(A)
+    fib = [0] * (L+2)
+    fib[1] = 1
+
+    for i in range(2, L + 2):
+        fib[i] = fib[i - 1] + fib[i - 2]
+    Ar = [0] * len(A)
+    for i in range(len(A)):
+        Ar[i] = fib[A[i]+1] & ((1 << B[i]) - 1)
+    return Ar
+#algo 3 
+def solution(A):
+  N = len(A)
+  M = 0
+  for i in range (N) :
+      A[i] = abs(A[i])
+      M = max(A[i],M)
+  S = sum(A)
+  C=[0]*(M+1)
+  for i in range (N):
+    C[A[i]] +=1
+  dp = [-1]*(S+1)
+  dp[0]=0
+  for i in range(1,M+1):
+      if C[i] > 0 : 
+        for j in range(S):
+          if dp[j]>= 0 :
+            dp[j]= C[i]
+          elif (j>=i and dp[j-i]>0):
+            dp[j] = dp[j-i]-1
+  aux =S
+  for i in range((S//2)+1):
+    if dp[i] >= 0:
+      aux = min(aux,S-2*i)
+  return aux
